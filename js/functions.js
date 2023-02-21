@@ -31,12 +31,12 @@ const getNumbers = (string) => {
   }
   console.log(string);
   let numbers = '';
+  let numbersTemp = ''; // без доп переменной не работала перваея ветка if , но выглядит плохо. Как улучшить?
   for (let i = 0; i <= string.length - 1; i++) {
     const stringToNumber = Number(string[i], 10); // ИСпользовать .at()?
-    console.log(stringToNumber);
-    numbers = (!isNaN(stringToNumber)) ? (numbers += string[i]) : NaN ;
+    numbers = (!isNaN(stringToNumber)) ? (numbersTemp += string[i]) : NaN;
   }
-  console.log(numbers); // Не понимаю почему выводит плюсует NaN к numbers,  если условие говорит "Запиши символ в numbers если это не NaN"
+  console.log(numbers);
 };
 getNumbers('ECMAScript 2022'); // Не получилось убрать знаки в примерах (-1), (1.5), но надо ли?;
 
@@ -50,18 +50,3 @@ const addStringPad = (string, lengthMin, pad) => {
   return stringWithPad;
 };
 addStringPad('q', 4, 'we');
-
-// Добавочный символ использован один раз
-// имя_функции('1', 2, '0');      // '01'
-
-// Добавочный символ использован три раза
-// имя_функции('1', 4, '0');      // '0001'
-
-// Добавочные символы обрезаны с конца
-// имя_функции('q', 4, 'werty');  // 'werq'
-
-// Добавочные символы использованы полтора раза
-// имя_функции('q', 4, 'we');     // 'wweq'
-
-// Добавочные символы не использованы, исходная строка не изменена
-// имя_функции('qwerty', 4, '0'); // 'qwerty'
