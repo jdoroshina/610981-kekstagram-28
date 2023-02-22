@@ -3,8 +3,7 @@ const checkStringLength = (string, lengthLimit) => {
   // if (string.length > lengthLimit) {
   //     isLimitExceeded = false;
   //   }
-  let isLimitExceeded;
-  isLimitExceeded = (string.length <= lengthLimit);
+  const isLimitExceeded = (string.length <= lengthLimit);
   return isLimitExceeded;
 };
 checkStringLength('проверяемая строка', 18);
