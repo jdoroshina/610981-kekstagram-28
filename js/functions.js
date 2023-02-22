@@ -35,7 +35,7 @@ const getNumbers = (string) => {
     const stringToNumber = Number(string[i], 10); // ИСпользовать .at()?
     numbers = (!isNaN(stringToNumber)) ? (numbersTemp += string[i]) : NaN;
   }
-  console.log(numbers);
+  return numbers;
 };
 getNumbers('ECMAScript 2022'); // Не получилось убрать знаки в примерах (-1), (1.5), но надо ли?;
 
