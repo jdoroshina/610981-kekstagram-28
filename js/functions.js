@@ -19,7 +19,6 @@ const isPalindrome = (string) => {
       return false;
     }
   }
-  console.log(isPalindromeResult);
   return isPalindromeResult;
 };
 isPalindrome('Лёша на полке клопа нашё ');
@@ -28,7 +27,6 @@ const getNumbers = (string) => {
   if (typeof string !== 'number') {
     string = string.replaceAll(' ', '');
   }
-  console.log(string);
   let numbers = '';
   let numbersTemp = ''; // без доп переменной не работала перваея ветка if , но выглядит плохо. Как улучшить?
   for (let i = 0; i <= string.length - 1; i++) {
