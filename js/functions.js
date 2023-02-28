@@ -2,19 +2,10 @@ const isStringPassLengthLimit = (string, lengthLimit) => string.length <= length
 isStringPassLengthLimit('проверяемая строка', 18);
 
 const isPalindrome = (string) => {
-  let isPalindromeResult = false;
-  string = string.toLowerCase().replaceAll(' ', '');
-  for (let i = 0; i <= string.length - 1; i++) {
-    const j = string.length - 1 - i;
-    if (string[i] === string[j]) {
-      isPalindromeResult = true;
-    } else {
-      return false;
-    }
-  }
-  return isPalindromeResult;
+  const clearString = string.toLowerCase().replaceAll(' ', '');
+  return clearString === clearString.split('').reverse().join('');
 };
-isPalindrome('Лёша на полке клопа нашё ');
+isPalindrome('Лёша на полке клопа нашёл');
 
 const getNumbers = (string) => {
   if (typeof string !== 'number') {
