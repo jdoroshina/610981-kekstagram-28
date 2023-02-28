@@ -1,4 +1,4 @@
-const checkStringLength = (string, lengthLimit) => {
+const isStringPassLengthLimit = (string, lengthLimit) => {
   // let isLimitExceeded = true;
   // if (string.length > lengthLimit) {
   //     isLimitExceeded = false;
@@ -6,7 +6,7 @@ const checkStringLength = (string, lengthLimit) => {
   const isLimitExceeded = (string.length <= lengthLimit);
   return isLimitExceeded;
 };
-checkStringLength('проверяемая строка', 18);
+isStringPassLengthLimit('проверяемая строка', 18);
 
 const isPalindrome = (string) => {
   let isPalindromeResult = false;
