@@ -1,11 +1,4 @@
-const isStringPassLengthLimit = (string, lengthLimit) => {
-  // let isLimitExceeded = true;
-  // if (string.length > lengthLimit) {
-  //     isLimitExceeded = false;
-  //   }
-  const isLimitExceeded = (string.length <= lengthLimit);
-  return isLimitExceeded;
-};
+const isStringPassLengthLimit = (string, lengthLimit) => string.length <= lengthLimit;
 isStringPassLengthLimit('проверяемая строка', 18);
 
 const isPalindrome = (string) => {
