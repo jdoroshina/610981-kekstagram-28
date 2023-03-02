@@ -12,12 +12,15 @@ const getNumbers = (string) => {
     string = string.replaceAll(' ', '');
   }
   let numbers = '';
-  let numbersTemp = '';
   for (let i = 0; i <= string.length - 1; i++) {
     const stringToNumber = Number(string[i], 10);
-    numbers = (!isNaN(stringToNumber)) ? (numbersTemp += string[i]) : NaN;
+
+    if (!isNaN(stringToNumber)) {
+      numbers += string[i];
+    }
   }
-  return numbers;
+
+  return numbers === '' ? NaN : numbers;
 };
 getNumbers('ECMAScript 2022');
 
