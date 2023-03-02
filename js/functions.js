@@ -12,18 +12,18 @@ const getNumbers = (string) => {
     string = string.replaceAll(' ', '');
   }
   let numbers = '';
-  let numbersTemp = ''; // без доп переменной не работала перваея ветка if , но выглядит плохо. Как улучшить?
+  let numbersTemp = '';
   for (let i = 0; i <= string.length - 1; i++) {
-    const stringToNumber = Number(string[i], 10); // ИСпользовать .at()?
+    const stringToNumber = Number(string[i], 10);
     numbers = (!isNaN(stringToNumber)) ? (numbersTemp += string[i]) : NaN;
   }
   return numbers;
 };
-getNumbers('ECMAScript 2022'); // Не получилось убрать знаки в примерах (-1), (1.5), но надо ли?;
+getNumbers('ECMAScript 2022');
 
 const addStringPad = (string, lengthMin, pad) => {
   let stringWithPad = string;
-  while (stringWithPad.length < lengthMin) {//1<4
+  while (stringWithPad.length < lengthMin) {
     const stringWithPadLength = pad.length + stringWithPad.length;
     const addedPad = (stringWithPadLength <= lengthMin) ? pad : pad.slice(0, lengthMin - stringWithPadLength);
     stringWithPad = addedPad + stringWithPad;
