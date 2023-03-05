@@ -42,3 +42,10 @@ const createIdGenerator = () => {
     return lastGeneratedId;
   };
 };
+
+const createComment = () => ({
+  id: '',
+  avatar: '',
+  message: '',
+  name: ''
+});
