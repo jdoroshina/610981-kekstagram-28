@@ -31,3 +31,5 @@ const getRandomInt = (a, b) => {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
+
+const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
