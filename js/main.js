@@ -53,3 +53,11 @@ const createComment = () => ({
   message: createMessage(),
   name: getRandomArrayElement(NAMES)
 });
+
+const createPhotoCard = () => ({
+  id: '',
+  url: '',
+  description: '',
+  likes: '',
+  comments: ''
+});
