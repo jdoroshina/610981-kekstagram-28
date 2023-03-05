@@ -43,8 +43,10 @@ const createIdGenerator = () => {
   };
 };
 
+const generateCommentId = createIdGenerator();
+
 const createComment = () => ({
-  id: '',
+  id: generateCommentId(),
   avatar: '',
   message: '',
   name: ''
