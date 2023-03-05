@@ -51,5 +51,5 @@ const createComment = () => ({
   id: generateCommentId(),
   avatar: `img/avatar-${getRandomInt(1, AVATAR_COUNT)}.svg`,
   message: createMessage(),
-  name: ''
+  name: getRandomArrayElement(NAMES)
 });
