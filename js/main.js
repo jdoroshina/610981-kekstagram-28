@@ -45,9 +45,11 @@ const createIdGenerator = () => {
 
 const generateCommentId = createIdGenerator();
 
+const createMessage = () => Array.from({ length: getRandomInt(1, 2)}, () => getRandomArrayElement(MESSAGES)).join(' ');
+
 const createComment = () => ({
   id: generateCommentId(),
   avatar: '',
-  message: '',
+  message: createMessage(),
   name: ''
 });
