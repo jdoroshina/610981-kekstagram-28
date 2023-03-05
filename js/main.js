@@ -61,3 +61,6 @@ const createPhotoCard = (index) => ({
   likes: getRandomInt(LIKES_MIN, LIKES_MAX),
   comments: createComment()
 });
+
+const getPhotoCards = () => Array.from({ length: PICTURE_COUNT}, (_, pictureIndex) => createPhotoCard(pictureIndex + 1));
+getPhotoCards();
