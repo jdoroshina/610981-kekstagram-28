@@ -49,7 +49,7 @@ const createMessage = () => Array.from({ length: getRandomInt(1, 2)}, () => getR
 
 const createComment = () => ({
   id: generateCommentId(),
-  avatar: '',
+  avatar: `img/avatar-${getRandomInt(1, AVATAR_COUNT)}.svg`,
   message: createMessage(),
   name: ''
 });
