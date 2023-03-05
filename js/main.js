@@ -57,7 +57,7 @@ const createComment = () => ({
 const createPhotoCard = () => ({
   id: '',
   url: '',
-  description: '',
+  description: getRandomArrayElement(DESCRIPTIONS),
   likes: '',
   comments: ''
 });
