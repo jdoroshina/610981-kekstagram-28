@@ -33,3 +33,12 @@ const getRandomInt = (a, b) => {
 };
 
 const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
+
+const createIdGenerator = () => {
+  let lastGeneratedId = 0;
+
+  return () => {
+    lastGeneratedId += 1;
+    return lastGeneratedId;
+  };
+};
