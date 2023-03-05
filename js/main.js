@@ -54,9 +54,9 @@ const createComment = () => ({
   name: getRandomArrayElement(NAMES)
 });
 
-const createPhotoCard = () => ({
-  id: '',
-  url: '',
+const createPhotoCard = (index) => ({
+  id: index,
+  url: `photos/${index}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInt(LIKES_MIN, LIKES_MAX),
   comments: createComment()
