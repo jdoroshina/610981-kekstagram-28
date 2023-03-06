@@ -25,9 +25,9 @@ const NAMES = [
   'Кирилл'
 ];
 
-const getRandomInt = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+const getRandomInt = (minRandomValue, maxRandomValue) => {
+  const lower = Math.ceil(Math.min(minRandomValue, maxRandomValue));
+  const upper = Math.floor(Math.max(minRandomValue, maxRandomValue));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
