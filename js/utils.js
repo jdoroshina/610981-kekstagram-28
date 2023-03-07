@@ -15,3 +15,5 @@ const createIdGenerator = () => {
     return lastGeneratedId;
   };
 };
+
+export { getRandomInt, getRandomArrayElement, createIdGenerator };
