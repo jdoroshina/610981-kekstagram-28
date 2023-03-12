@@ -1,3 +1,1 @@
-import { getPhotoCards } from './data.js';
-
-getPhotoCards();
+import './thumbnail.js';

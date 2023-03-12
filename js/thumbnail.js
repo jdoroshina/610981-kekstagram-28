@@ -1,3 +1,5 @@
+import { getPhotoCards } from './data.js';
+
 const thumbnailTemplate = document
   .querySelector('#picture')
   .content
