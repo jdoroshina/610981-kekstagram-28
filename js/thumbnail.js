@@ -15,7 +15,7 @@ thumbnails.forEach(({url, description, likes, comments}) => {
   thumbnailItem.querySelector('.picture__img').src = url;
   thumbnailItem.querySelector('.picture__img').alt = description;
   thumbnailItem.querySelector('.picture__likes').textContent = likes;
-  thumbnailItem.querySelector('.picture__comments').textContent = comments;
+  thumbnailItem.querySelector('.picture__comments').textContent = comments.length;
   thumbnailFragment.appendChild(thumbnailItem);
 });
 

@@ -3,6 +3,7 @@ import { getRandomInt, getRandomArrayElement, createIdGenerator } from './utils.
 const PICTURE_COUNT = 25;
 const LIKES_MIN = 15;
 const LIKES_MAX = 200;
+const COMMENTS_MAX = 200;
 const AVATAR_COUNT = 6;
 const DESCRIPTIONS = [
   'Самое веселое из моего дня.',
@@ -43,7 +44,7 @@ const createPhotoCard = (index) => ({
   url: `photos/${index}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInt(LIKES_MIN, LIKES_MAX),
-  comments: createComment()
+  comments: Array.from({length: getRandomInt(1, COMMENTS_MAX)}, createComment)
 });
 
 const getPhotoCards = () => Array.from({ length: PICTURE_COUNT}, (_, pictureIndex) => createPhotoCard(pictureIndex + 1));
