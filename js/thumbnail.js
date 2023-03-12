@@ -3,6 +3,8 @@ const thumbnailTemplate = document
   .content
   .querySelector('.picture'); //Находим контент темплейта в разметке
 
+const thumbnailContainer = document.querySelector('.pictures'); //находим место куда будем вставлять темплейт
+
 const thumbnails = getPhotoCards(); //сохраняем сгенерированные обхекты
 
 const thumbnailFragment = document.createDocumentFragment();
@@ -14,3 +16,5 @@ thumbnails.forEach(({url, description, likes, comments}) => {
   thumbnailItem.querySelector('.picture__comments').textContent = comments;
   thumbnailFragment.appendChild(thumbnailItem);
 });
+
+thumbnailContainer.appendChild(thumbnailFragment);
