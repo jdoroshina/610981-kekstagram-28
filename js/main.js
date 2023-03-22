@@ -1,2 +1,5 @@
-import './thumbnail.js';
-import './popup.js';
+import { getPhotoCards } from './data.js';
+import { renderThumbnails } from './thumbnail.js';
+
+renderThumbnails(getPhotoCards());
+
