@@ -1,11 +1,16 @@
 import { isEscapeKey } from './utils.js';
 
 const thumbnailContainer = document.querySelector('.pictures');
-const modal = document.querySelector('.big-picture');
-const CloseElement = document.querySelector('.big-picture__cancel');
-const CommentsCount = document.querySelector('.social__comment-count');
-const CommentsLoader = document.querySelector('.comments-loader');
+const bigPicture = document.querySelector('.big-picture'); //section
+const closeElement = document.querySelector('.big-picture__cancel');
+const commentsCount = document.querySelector('.social__comment-count');
+const commentsLoader = document.querySelector('.comments-loader');
 const body = document.querySelector('body');
+const commentTemplate = document
+  .querySelector('#comments')
+  .content
+  .querySelector('.social__comment');
+const commentsContainer = document.querySelector('.social__comments');
 
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -15,15 +20,15 @@ const onPopupEscKeydown = (evt) => {
 };
 
 const openPopup = () => {
-  modal.classList.remove('hidden');
-  CommentsCount.classList.add('hidden');
-  CommentsLoader.classList.add('hidden');
+  bigPicture.classList.remove('hidden');
+  commentsCount.classList.add('hidden');
+  commentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onPopupEscKeydown);
 };
 
 const closePopup = () => {
-  modal.classList.add('hidden');
+  bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
 
@@ -33,6 +38,6 @@ thumbnailContainer.addEventListener('click', () => {
   openPopup();
 });
 
-CloseElement.addEventListener('click', () => {
+closeElement.addEventListener('click', () => {
   closePopup();
 });
