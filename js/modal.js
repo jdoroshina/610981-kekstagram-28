@@ -33,8 +33,24 @@ const closePopup = () => {
   document.removeEventListener('keydown', onPopupEscKeydown);
 
 };
+/**
+ * функция генерирует комментарии по темплейту и вставляет их в ul
+ * @param {*} comments комментарии описания одной фотографии
+ */
+const renderComments = (comments) => {
+  const fragment = document.createDocumentFragment();
+  comments.forEach((commentItem) => {
+    const comment = commentTemplate.cloneNode(true); ///кладем клоны темплейтов в переменную
 
-thumbnailContainer.addEventListener('click', () => {
+    comment.querySelector('.social__picture').src = commentItem.avatar;
+    comment.querySelector('.social__picture').alt = commentItem.name;
+    comment.querySelector('.social__text').textContent = commentItem.message;
+
+    fragment.append(comment);
+  });
+
+  commentsContainer.append(fragment);
+};
   openPopup();
 });
 
