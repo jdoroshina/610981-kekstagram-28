@@ -3,7 +3,7 @@ import { getRandomInt, getRandomArrayElement, createIdGenerator } from './utils.
 const PICTURE_COUNT = 25;
 const LIKES_MIN = 15;
 const LIKES_MAX = 200;
-const COMMENTS_MAX = 200;
+const COMMENTS_MAX = 20;
 const AVATAR_COUNT = 6;
 const DESCRIPTIONS = [
   'Самое веселое из моего дня.',
