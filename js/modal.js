@@ -61,6 +61,7 @@ const createContainerListener = (photoDescriptions) => {
       bigPicture.querySelector('.big-picture__img img').alt = currentDescription.description;
       bigPicture.querySelector('.likes-count').textContent = currentDescription.likes;
       bigPicture.querySelector('.comments-count').textContent = currentDescription.comments;
+      bigPicture.querySelector('.social__comments').innerHTML = ' ';
       renderComments(currentDescription.comments);
       openPopup();
     }
