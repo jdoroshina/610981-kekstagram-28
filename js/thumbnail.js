@@ -1,22 +1,34 @@
-import { getPhotoCards } from './data.js';
-
 const thumbnailTemplate = document
   .querySelector('#picture')
   .content
   .querySelector('.picture'); //Находим контент темплейта в разметке
+const container = document.querySelector('.pictures'); //находим место куда будем вставлять темплейт
 
-const thumbnailContainer = document.querySelector('.pictures'); //находим место куда будем вставлять темплейт
+/**
+ * функция генерирования миниатюр
+ * @param {*} param0 объект описания
+ * @returns заполненный шаблон в виде html разметки
+ */
+const createThumbnail = ({ id, url, description, likes, comments }) => {
+  const thumbnail = thumbnailTemplate.cloneNode(true); ///кладем клоны темплейтов в переменную
 
-const thumbnails = getPhotoCards(); //сохраняем сгенерированные обхекты
+  thumbnail.querySelector('.picture__img').src = url;
+  thumbnail.querySelector('.picture__img').alt = description;
+  thumbnail.querySelector('.picture__likes').textContent = likes;
+  thumbnail.querySelector('.picture__comments').textContent = comments.length;
+  thumbnail.dataset.thumbnailId = id;
 
-const thumbnailFragment = document.createDocumentFragment();
-thumbnails.forEach(({url, description, likes, comments}) => {
-  const thumbnailItem = thumbnailTemplate.cloneNode(true); //кладем клоны темплейтов в переменную
-  thumbnailItem.querySelector('.picture__img').src = url;
-  thumbnailItem.querySelector('.picture__img').alt = description;
-  thumbnailItem.querySelector('.picture__likes').textContent = likes;
-  thumbnailItem.querySelector('.picture__comments').textContent = comments.length;
-  thumbnailFragment.appendChild(thumbnailItem);
-});
+  return thumbnail;
+};
 
-thumbnailContainer.appendChild(thumbnailFragment);
+const renderThumbnails = (thumbnails) => {
+  const fragment = document.createDocumentFragment();
+  thumbnails.forEach((thumbnail) => {
+    const pictureItem = createThumbnail(thumbnail);
+    fragment.append(pictureItem);
+  });
+
+  container.append(fragment);
+};
+
+export { renderThumbnails };
