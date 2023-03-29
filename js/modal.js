@@ -1,5 +1,6 @@
 import { isEscapeKey } from './utils.js';
 
+const COMMENTS_SHOWN_FRACTION = 5;
 const thumbnailContainer = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture'); //section
 const closeElement = document.querySelector('.big-picture__cancel');
@@ -10,7 +11,10 @@ const commentTemplate = document
   .querySelector('#comments')
   .content
   .querySelector('.social__comment');
-const commentsContainer = document.querySelector('.social__comments');
+const commentsContainer = document.querySelector('.social__comments'); //ul
+
+let commentsShown = 0;
+let comments = [];
 
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -19,38 +23,49 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
-const openPopup = () => {
+const openModal = () => {
   bigPicture.classList.remove('hidden');
-  commentsCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onPopupEscKeydown);
 };
 
-const closePopup = () => {
+const closeModal = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
-
+  commentsShown = 0;
 };
+
 /**
  * функция генерирует комментарии по темплейту и вставляет их в ul
- * @param {*} comments комментарии описания одной фотографии
+ * @param {*} currentComments комментарии описания одной фотографии
  */
-const renderComments = (comments) => {
+const renderComments = () => {
+  commentsShown += COMMENTS_SHOWN_FRACTION;
+
+  if (commentsShown >= comments.length) {
+    commentsLoader.classList.add('hidden');
+    commentsShown = comments.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
+
   const fragment = document.createDocumentFragment();
-  comments.forEach((commentItem) => {
-    const comment = commentTemplate.cloneNode(true); ///кладем клоны темплейтов в переменную
 
-    comment.querySelector('.social__picture').src = commentItem.avatar;
-    comment.querySelector('.social__picture').alt = commentItem.name;
-    comment.querySelector('.social__text').textContent = commentItem.message;
+  for (let i = 0; i < commentsShown; i++) {
+    const commentItem = commentTemplate.cloneNode(true);
+    commentItem.querySelector('.social__picture').src = comments[i].avatar;
+    commentItem.querySelector('.social__picture').alt = comments[i].name;
+    commentItem.querySelector('.social__text').textContent = comments[i].message;
+    fragment.append(commentItem);
+  }
 
-    fragment.append(comment);
-  });
-
+  commentsContainer.innerHTML = '';
+  commentsCount.innerHTML = `${commentsShown} из <span class="comments-count">${comments.length}</span> комментариев`;
   commentsContainer.append(fragment);
 };
+
+const onCommentsLoaderClick = () => renderComments();
 
 const createContainerListener = (photoDescriptions) => {
   thumbnailContainer.addEventListener('click', (evt) => {
@@ -60,16 +75,20 @@ const createContainerListener = (photoDescriptions) => {
       bigPicture.querySelector('.big-picture__img img').src = currentDescription.url;
       bigPicture.querySelector('.big-picture__img img').alt = currentDescription.description;
       bigPicture.querySelector('.likes-count').textContent = currentDescription.likes;
-      bigPicture.querySelector('.comments-count').textContent = currentDescription.comments;
-      bigPicture.querySelector('.social__comments').innerHTML = ' ';
-      renderComments(currentDescription.comments);
-      openPopup();
+      bigPicture.querySelector('.comments-count').textContent = currentDescription.comments.length;
+      comments = currentDescription.comments;
+      if (comments.length > 0) {
+        renderComments();
+      }
+      openModal();
     }
   });
 };
 
 closeElement.addEventListener('click', () => {
-  closePopup();
+  closeModal();
 });
+
+commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
 export { createContainerListener };
