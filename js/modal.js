@@ -70,6 +70,7 @@ const onCommentsLoaderClick = () => renderComments();
 const createContainerListener = (photoDescriptions) => {
   thumbnailContainer.addEventListener('click', (evt) => {
     if (evt.target.closest('.picture')) {
+      //нужно ли было тут сделать evt.preventDefault()?
       const thumbnail = evt.target.closest('.picture');
       const currentDescription = photoDescriptions.find((item) => item.id === Number(thumbnail.dataset.thumbnailId));
       bigPicture.querySelector('.big-picture__img img').src = currentDescription.url;
