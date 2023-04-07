@@ -1,4 +1,5 @@
 import { isEscapeKey } from './utils.js';
+import { resetScale } from './scale.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яë0-9]{1,19}$/i;
@@ -28,6 +29,7 @@ const showModal = () => {
 const closeModal = () => {
   form.reset();
   pristine.reset();
+  resetScale();
   overlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
