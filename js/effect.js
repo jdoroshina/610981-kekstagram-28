@@ -1,7 +1,3 @@
-//2. Реализуй применение фильтра для изображения
-//  2.1 Настрой правила использования фильтров
-//      2.1.1 Установи по умолчанию фильтр .effects__preview--none
-
 const EFFECTS = [
   {
     name: 'none',
@@ -52,15 +48,72 @@ const EFFECTS = [
     unit: ''
   }
 ];
-//      2.1.2 Установи ограничение 1 изображение = 1 фильтр (ф-ция делегирования на радиокнопках переписывает класс className)
-//      2.1.3 Добавь для .img-upload__preview img класс effects__preview--х при выборе .effect-х через радиокнопоки .effects__radio (делегирование. + )
-//  2.2 Настрой слайдер
-//      2.2.1 Подключи noUiSlider
-//      2.2.2 Интенсивность фильтра регулируется перемещением ползунка в слайдере.
-//      2.2.3 Уровень фильтра записывается в поле .effect-level__value.
 
-//      2.2.5 Скрой слайдер и его контейнер (.img-upload__effect-level) при выборе (effects__preview--none)
-//      2.2.6 Настрой сброс уровня фильтра до начального при:
-//          - перемещении слайдера
-//          - переключении фильтров
-//  2.3 Запиши значение эффекта в скрытое поле
+const imageElement = document.querySelector('.img-upload__preview img');
+const effectsList = document.querySelector('.effects__list');
+const sliderInput = document.querySelector('.effect-level__value');
+const sliderContainerElement = document.querySelector('.img-upload__effect-level');
+const sliderElement = document.querySelector('.effect-level__slider');
+
+const defaultEffect = EFFECTS[0];
+let currentEffect = defaultEffect;
+
+const isDefault = () => currentEffect === defaultEffect;
+
+noUiSlider.create(sliderElement, {
+  range: {
+    max: currentEffect.max,
+    min: currentEffect.min
+  },
+  start: currentEffect.max,
+  step: currentEffect.step
+});
+
+const showSlider = () => {
+  sliderContainerElement.classList.remove('hidden');
+};
+
+const hideSlider = () => {
+  sliderContainerElement.classList.add('hidden');
+};
+
+const updateSlider = () => {
+  sliderElement.noUiSlider.updateOptions({
+    range: {
+      max: currentEffect.max,
+      min: currentEffect.min
+    },
+    start: currentEffect.max,
+    step: currentEffect.step
+  });
+
+  if (isDefault()) {
+    hideSlider();
+  } else {
+    showSlider();
+  }
+};
+
+const onEffectsChange = (evt) => {
+  if(evt.target.classList.contains('effects__radio')) {
+    const effectName = evt.target.value;
+    imageElement.className = `effects__preview--${effectName}`;
+    currentEffect = EFFECTS.find((item) => item.name === effectName);
+  }
+  updateSlider();
+};
+
+const onSliderUpdate = () => {
+  sliderInput.value = sliderElement.noUiSlider.get();
+  imageElement.style.filter = `${currentEffect.style}(${sliderInput.value}${currentEffect.unit})`;
+};
+
+const resetEffects = () => {
+  currentEffect = defaultEffect;
+  onSliderUpdate();
+};
+
+effectsList.addEventListener('change', onEffectsChange);
+sliderElement.noUiSlider.on('update', onSliderUpdate);
+
+export { resetEffects };
