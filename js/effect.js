@@ -60,15 +60,6 @@ let currentEffect = defaultEffect;
 
 const isDefault = () => currentEffect === defaultEffect;
 
-noUiSlider.create(sliderElement, {
-  range: {
-    max: currentEffect.max,
-    min: currentEffect.min
-  },
-  start: currentEffect.max,
-  step: currentEffect.step
-});
-
 const showSlider = () => {
   sliderContainerElement.classList.remove('hidden');
 };
@@ -105,13 +96,28 @@ const onEffectsChange = (evt) => {
 
 const onSliderUpdate = () => {
   sliderInput.value = sliderElement.noUiSlider.get();
-  imageElement.style.filter = `${currentEffect.style}(${sliderInput.value}${currentEffect.unit})`;
+  if (isDefault()) {
+    imageElement.style.filter = defaultEffect.style;
+  } else {
+    imageElement.style.filter = `${currentEffect.style}(${sliderInput.value}${currentEffect.unit})`;
+  }
 };
 
 const resetEffects = () => {
   currentEffect = defaultEffect;
-  onSliderUpdate();
+  updateSlider();
 };
+
+noUiSlider.create(sliderElement, {
+  range: {
+    max: currentEffect.max,
+    min: currentEffect.min
+  },
+  start: currentEffect.max,
+  step: currentEffect.step,
+  connect: 'lower'
+});
+hideSlider();
 
 effectsList.addEventListener('change', onEffectsChange);
 sliderElement.noUiSlider.on('update', onSliderUpdate);
