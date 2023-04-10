@@ -1,7 +1,9 @@
 import { getPhotoCards } from './data.js';
 import { renderThumbnails } from './thumbnail.js';
-import './modal.js';
 import { createContainerListener } from './modal.js';
+import { closeModal } from './modal.js';
+import { setUserFormSubmit } from './forms.js';
+import './modal.js';
 import './forms.js';
 import './scale.js';
 import './effect.js';
@@ -15,3 +17,4 @@ fetch('https://28.javascript.pages.academy/kekstagram/data')
   });
 
 createContainerListener(photoDescriptions);
+setUserFormSubmit(closeModal);

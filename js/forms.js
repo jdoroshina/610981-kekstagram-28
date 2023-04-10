@@ -1,4 +1,4 @@
-import { isEscapeKey } from './utils.js';
+import { showAlert, isEscapeKey } from './utils.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effect.js';
 
@@ -99,11 +99,32 @@ pristine.addValidator(
   'Хештег должен начинаться с #, содержать буквы или цифры, быть не длиннее 20 символов'
 );
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (pristine.validate()) {
+      const formData = new FormData(evt.target);
+
+      fetch('https://28.javascript.pages.academy/kekstagram', {
+        method: 'POST',
+        body: formData
+      })
+        .then((response) => {
+          if (response.ok) {
+            onSuccess();
+          } else {
+            showAlert('Ошибка отправки на сервер. Попробуйте ещё раз.');
+          }
+        })
+        .catch(() => {
+          showAlert('Ошибка отправки на сервер. Попробуйте ещё раз.');
+        });
+    }
+  });
 };
 
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
-form.addEventListener('submit', onFormSubmit);
+
+export { setUserFormSubmit };
