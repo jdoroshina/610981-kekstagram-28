@@ -1,9 +1,16 @@
 import { showAlert, isEscapeKey } from './utils.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effect.js';
+import { sendData } from './api.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яë0-9]{1,19}$/i;
+
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
 
 const overlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -12,14 +19,23 @@ const cancelButton = document.querySelector('#upload-cancel');
 const form = document.querySelector('.img-upload__form');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
+const submitButton = document.querySelector('.img-upload__submit');
 
-//есть ли разница на что накладывать пристин ( у меня на div, но может лучше на fieldset)?
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',//указываем элемент, на который добалвяем служебные классы
   errorTextParent: 'img-upload__field-wrapper',//класс элемента, в который будет выводиться текст ошибки
   errorTextClass: 'img-upload__field-wrapper__error'//класс для стилизация текста ошибки
-
 });
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
 
 const showModal = () => {
   overlay.classList.remove('hidden');
@@ -104,22 +120,15 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
 
     if (pristine.validate()) {
-      const formData = new FormData(evt.target);
-
-      fetch('https://28.javascript.pages.academy/kekstagram', {
-        method: 'POST',
-        body: formData
-      })
-        .then((response) => {
-          if (response.ok) {
-            onSuccess();
-          } else {
-            showAlert('Ошибка отправки на сервер. Попробуйте ещё раз.');
-          }
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          onSuccess();
         })
-        .catch(() => {
-          showAlert('Ошибка отправки на сервер. Попробуйте ещё раз.');
-        });
+        .catch((err) => {
+          showAlert(err.message);
+        })
+        .finally(unblockSubmitButton);
     }
   });
 };
@@ -127,4 +136,4 @@ const setUserFormSubmit = (onSuccess) => {
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
 
-export { setUserFormSubmit };
+export { setUserFormSubmit, closeModal };
