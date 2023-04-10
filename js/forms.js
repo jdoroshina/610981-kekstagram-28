@@ -37,13 +37,13 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const showModal = () => {
+const showForm = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const closeModal = () => {
+const closeForm = () => {
   form.reset();
   pristine.reset();
   resetScale();
@@ -60,16 +60,16 @@ const isTextFieldFocused = () =>
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt) && !isTextFieldFocused()) {
     evt.preventDefault();
-    closeModal();
+    closeForm();
   }
 }
 
 const onFileInputChange = () => {
-  showModal();
+  showForm();
 };
 
 const onCancelButtonClick = () => {
-  closeModal();
+  closeForm();
 };
 
 
@@ -124,9 +124,11 @@ const setUserFormSubmit = (onSuccess) => {
       sendData(new FormData(evt.target))
         .then(() => {
           onSuccess();
+          //вызов showsuccessmessage ( слушать событие )
         })
         .catch((err) => {
-          showAlert(err.message);
+          showAlert(err.message); //вместо showalertmessage (навесить обработчики)
+          // при показе ошибки снять обработчик с закртия формы по esc и
         })
         .finally(unblockSubmitButton);
     }
@@ -136,4 +138,4 @@ const setUserFormSubmit = (onSuccess) => {
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
 
-export { setUserFormSubmit, closeModal };
+export { setUserFormSubmit, closeForm };
