@@ -1,7 +1,8 @@
-import { showAlert, isEscapeKey } from './utils.js';
+import { isEscapeKey } from './utils.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effect.js';
 import { sendData } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './form-message.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яë0-9]{1,19}$/i;
@@ -124,11 +125,10 @@ const setUserFormSubmit = (onSuccess) => {
       sendData(new FormData(evt.target))
         .then(() => {
           onSuccess();
-          //вызов showsuccessmessage ( слушать событие )
+          showSuccessMessage();
         })
         .catch((err) => {
-          showAlert(err.message); //вместо showalertmessage (навесить обработчики)
-          // при показе ошибки снять обработчик с закртия формы по esc и
+          showErrorMessage(err.message);
         })
         .finally(unblockSubmitButton);
     }
