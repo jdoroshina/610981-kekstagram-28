@@ -7,6 +7,7 @@ import './modal.js';
 import './forms.js';
 import './scale.js';
 import './effect.js';
+import './sorting.js';
 
 const photoDescriptions = getPhotoCards();
 
