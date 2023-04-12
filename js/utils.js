@@ -1,24 +1,21 @@
 const ALERT_SHOW_TIME = 5000;
 
-const getRandomInt = (minRandomValue, maxRandomValue) => {
-  const lower = Math.ceil(Math.min(minRandomValue, maxRandomValue));
-  const upper = Math.floor(Math.max(minRandomValue, maxRandomValue));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
+const getRandomArrValues = (arr, valuesQuantity) => {
+  const result = arr.slice(); // Создаем копию исходного arr
+  result.sort(() => Math.random() - 0.5); // Сортируем массив случайным образом
+  return result.slice(0, valuesQuantity); // Возвращаем первые valuesQuantity элементов
 };
 
-const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
-
-const createIdGenerator = () => {
-  let lastGeneratedId = 0;
-
-  return () => {
-    lastGeneratedId += 1;
-    return lastGeneratedId;
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -41,4 +38,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export { getRandomInt, getRandomArrayElement, createIdGenerator, isEscapeKey, showAlert };
+export { showAlert, isEscapeKey, getRandomArrValues, debounce };
