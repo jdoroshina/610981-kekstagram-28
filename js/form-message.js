@@ -16,18 +16,18 @@ const onErrorModalEscKeydown = (evt) => {
   }
 };
 
-function closeSuccessModal () {
+function closeSuccessModal() {
   const successModal = document.querySelector('.success');
   successModal.remove();
   document.removeEventListener('keydown', onSuccessModalEscKeydown);
-};
+}
 
-function closeErrorModal () {
+function closeErrorModal() {
   const errorModal = document.querySelector('.error');
   errorModal.remove();
   document.removeEventListener('keydown', onErrorModalEscKeydown);
   document.addEventListener('keydown', onDocumentKeydown);
-};
+}
 
 const onOutSuccessMessageModalClick = (evt) => {
   if (!(evt.target.closest('.success__inner'))) {
