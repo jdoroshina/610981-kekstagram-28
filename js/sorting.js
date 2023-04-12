@@ -27,13 +27,14 @@ const sortByComments = (photos) => renderThumbnails(photos.slice().sort((a, b) =
 
 const sortPicturesList = debounce((photos, filterId) => {
   clearPhotoList();
-  let sortedPhotos = photos.slice();
+  const sortedPhotos = photos.slice();
   if (filterId === 'filter-random') {
-    sortedPhotos = sortByRandom(photos);
+    sortByRandom(photos);
   } else if (filterId === 'filter-discussed') {
-    sortedPhotos = sortByComments(photos);
+    sortByComments(photos);
+  } else if (filterId === 'filter-default') {
+    renderThumbnails(sortedPhotos);
   }
-  renderThumbnails(sortedPhotos);
 }, SORTING_RESPONSE_DELAY);
 
 
