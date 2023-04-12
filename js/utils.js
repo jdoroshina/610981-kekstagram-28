@@ -1,5 +1,19 @@
 const ALERT_SHOW_TIME = 5000;
 
+const getRandomArrValues = (arr, valuesQuantity) => {
+  const result = arr.slice(); // Создаем копию исходного arr
+  result.sort(() => Math.random() - 0.5); // Сортируем массив случайным образом
+  return result.slice(0, valuesQuantity); // Возвращаем первые valuesQuantity элементов
+};
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
 const getRandomInt = (minRandomValue, maxRandomValue) => {
   const lower = Math.ceil(Math.min(minRandomValue, maxRandomValue));
   const upper = Math.floor(Math.max(minRandomValue, maxRandomValue));
@@ -41,4 +55,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export { getRandomInt, getRandomArrayElement, createIdGenerator, isEscapeKey, showAlert };
+export { getRandomInt, getRandomArrayElement, createIdGenerator, isEscapeKey, showAlert, getRandomArrValues, debounce };
