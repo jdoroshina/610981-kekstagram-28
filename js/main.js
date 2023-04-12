@@ -1,4 +1,3 @@
-import { getPhotoCards } from './data.js';
 import { renderThumbnails } from './thumbnail.js';
 import { getPicturesSorting } from './sorting.js';
 import { createContainerListener } from './modal.js';
@@ -9,13 +8,11 @@ import './forms.js';
 import './scale.js';
 import './effect.js';
 
-const photoDescriptions = getPhotoCards();
-
 getData()
   .then((thumbnails) => {
     renderThumbnails(thumbnails);
     getPicturesSorting(thumbnails);
+    createContainerListener(thumbnails);
   });
 
-createContainerListener(photoDescriptions);
 setUserFormSubmit(closeForm);
