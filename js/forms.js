@@ -138,4 +138,4 @@ const setUserFormSubmit = (onSuccess) => {
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
 
-export { setUserFormSubmit, closeForm };
+export { setUserFormSubmit, closeForm, onDocumentKeydown };
