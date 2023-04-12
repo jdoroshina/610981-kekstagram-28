@@ -91,4 +91,4 @@ closeElement.addEventListener('click', () => {
 
 commentsLoader.addEventListener('click', onCommentsLoaderClick);
 
-export { createContainerListener };
+export { createContainerListener, onPopupEscKeydown };

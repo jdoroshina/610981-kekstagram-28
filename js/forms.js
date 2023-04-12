@@ -1,9 +1,17 @@
 import { isEscapeKey } from './utils.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effect.js';
+import { sendData } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './form-message.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яë0-9]{1,19}$/i;
+
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
 
 const overlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -12,22 +20,31 @@ const cancelButton = document.querySelector('#upload-cancel');
 const form = document.querySelector('.img-upload__form');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
+const submitButton = document.querySelector('.img-upload__submit');
 
-//есть ли разница на что накладывать пристин ( у меня на div, но может лучше на fieldset)?
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',//указываем элемент, на который добалвяем служебные классы
   errorTextParent: 'img-upload__field-wrapper',//класс элемента, в который будет выводиться текст ошибки
   errorTextClass: 'img-upload__field-wrapper__error'//класс для стилизация текста ошибки
-
 });
 
-const showModal = () => {
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const showForm = () => {
   overlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const closeModal = () => {
+const closeForm = () => {
   form.reset();
   pristine.reset();
   resetScale();
@@ -44,16 +61,16 @@ const isTextFieldFocused = () =>
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt) && !isTextFieldFocused()) {
     evt.preventDefault();
-    closeModal();
+    closeForm();
   }
 }
 
 const onFileInputChange = () => {
-  showModal();
+  showForm();
 };
 
 const onCancelButtonClick = () => {
-  closeModal();
+  closeForm();
 };
 
 
@@ -99,11 +116,26 @@ pristine.addValidator(
   'Хештег должен начинаться с #, содержать буквы или цифры, быть не длиннее 20 символов'
 );
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (pristine.validate()) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          onSuccess();
+          showSuccessMessage();
+        })
+        .catch((err) => {
+          showErrorMessage(err.message);
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
 };
 
 fileField.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
-form.addEventListener('submit', onFormSubmit);
+
+export { setUserFormSubmit, closeForm, onDocumentKeydown };
