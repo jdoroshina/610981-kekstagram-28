@@ -16,13 +16,6 @@ const commentsContainer = document.querySelector('.social__comments'); //ul
 let commentsShown = 0;
 let comments = [];
 
-const onPopupEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    bigPicture.classList.add('hidden');
-  }
-};
-
 const openModal = () => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -35,6 +28,13 @@ const closeModal = () => {
   document.removeEventListener('keydown', onPopupEscKeydown);
   commentsShown = 0;
 };
+
+function onPopupEscKeydown (evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeModal();
+  }
+}
 
 /**
  * функция генерирует комментарии по темплейту и вставляет их в ul
