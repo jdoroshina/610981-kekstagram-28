@@ -1,7 +1,6 @@
 const SERVER_URL_GET_DATA = 'https://28.javascript.pages.academy/kekstagram/data';
 const SERVER_URL_POST = 'https://28.javascript.pages.academy/kekstagram';
-
-const errorText = 'Не удалось загрузить данные. Попробуйте обновить страницу.';
+const ERROR_TEXT = 'Не удалось загрузить данные. Попробуйте обновить страницу.';
 
 const getData = () => fetch(SERVER_URL_GET_DATA)
   .then((response) => {
@@ -11,7 +10,7 @@ const getData = () => fetch(SERVER_URL_GET_DATA)
     return response.json();
   })
   .catch(() => {
-    throw new Error(errorText);
+    throw new Error(ERROR_TEXT);
   });
 
 const sendData = (body) => fetch(SERVER_URL_POST, {
@@ -25,7 +24,7 @@ const sendData = (body) => fetch(SERVER_URL_POST, {
     return response.json();
   })
   .catch(() => {
-    throw new Error(errorText);
+    throw new Error(ERROR_TEXT);
   });
 
 export { getData, sendData };

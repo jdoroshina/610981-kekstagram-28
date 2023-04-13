@@ -1,7 +1,7 @@
 import { getData } from './api.js';
 import { renderThumbnails } from './thumbnail.js';
 import { getPicturesSorting } from './sorting.js';
-import { createContainerListener } from './modal.js';
+import { createContainerListener } from './big-picture.js';
 import { setUserFormSubmit, closeForm } from './forms.js';
 import { showAlert } from './utils.js';
 import './big-picture.js';
