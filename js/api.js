@@ -1,4 +1,5 @@
-const SERVER_URL_GET_DATA = 'https://28.javascript.pages.academy/kekstagram/data';
+// const SERVER_URL_GET_DATA = 'https://28.javascript.pages.academy/kekstagram/data';
+const SERVER_URL_GET_DATA = 'https://github.com/jdoroshina/610981-kekstagram-28/blob/master/data.json';
 const SERVER_URL_POST = 'https://28.javascript.pages.academy/kekstagram';
 const ERROR_TEXT = 'Не удалось загрузить данные. Попробуйте обновить страницу.';
 
